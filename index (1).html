@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shamini's Kitchen | Cooking Recipes</title>
+<style>
+:root{--wine:#74130f;--wine2:#941d17;--gold:#f5aa16;--cream:#fff8f0;--ink:#39251d;--muted:#78665d}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink)}
+header{position:sticky;top:0;z-index:10;background:var(--wine);color:white;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 3px 12px #0002}
+.brand{font-size:1.45rem;font-weight:800;white-space:nowrap}.brand span{color:var(--gold)}
+nav{display:flex;gap:20px;flex-wrap:wrap}nav a{color:white;text-decoration:none;font-weight:700;font-size:.95rem;padding:8px 0;border-bottom:2px solid transparent}nav a:hover,nav a.active{border-color:var(--gold);color:#ffe2a0}
+main{min-height:75vh}.page{display:none}.page.active{display:block}
+.hero{min-height:440px;padding:70px 7%;display:flex;align-items:center;background:linear-gradient(90deg,#1d100bd9,#1d100b22),url('https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1800&q=85');background-image:linear-gradient(90deg,#1d100bd9,#1d100b22),url('https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1800&q=85');background-size:cover;background-position:center;color:white}
+.hero-inner{max-width:620px}.eyebrow{color:#ffd36b;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(2.3rem,5vw,4rem);line-height:1.08;margin:12px 0}.hero h1 span{color:var(--gold)}.hero p{font-size:1.15rem;line-height:1.6}.btn{display:inline-block;background:var(--gold);color:#28160b;border:0;border-radius:30px;padding:13px 22px;font-weight:800;text-decoration:none;cursor:pointer;margin-top:12px}.btn:hover{filter:brightness(.95);transform:translateY(-1px)}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:24px 5%;background:#fff0df}.feature{text-align:center;padding:15px;border-right:1px solid #ead8c7}.feature:last-child{border:0}.feature .emoji{font-size:1.8rem}.feature h3{margin:8px 0 4px}.feature p{margin:0;color:var(--muted);font-size:.9rem}
+.section{padding:48px 5%;max-width:1250px;margin:auto}.section-head{text-align:center;margin-bottom:28px}.section-head h2{color:var(--wine);font-size:2rem;margin:0 0 8px}.section-head p{color:var(--muted);margin:0}.recipe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.recipe-card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 5px 18px #4b2b1615;transition:.2s}.recipe-card:hover{transform:translateY(-4px);box-shadow:0 10px 24px #4b2b1625}.recipe-card img{width:100%;height:185px;object-fit:cover;display:block}.recipe-body{padding:16px}.recipe-body h3{margin:0 0 8px;color:var(--wine)}.recipe-body p{font-size:.92rem;line-height:1.5;color:var(--muted);margin:0 0 12px}.tag{font-size:.8rem;background:#fff0d5;color:#80510a;padding:5px 9px;border-radius:20px}.small-btn{background:var(--wine);color:white;border:0;border-radius:24px;padding:10px 15px;font-weight:700;cursor:pointer;margin-top:14px}
+.card{max-width:680px;margin:35px auto;padding:30px;background:white;border-radius:18px;box-shadow:0 6px 24px #4b2b1615}.card h2{text-align:center;color:var(--wine);margin-top:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}.field{margin-top:13px}.field.full{grid-column:1/-1}label{display:block;font-weight:700;font-size:.92rem;margin-bottom:6px}input,select,textarea{width:100%;padding:12px;border:1px solid #ddcfc2;border-radius:8px;font:inherit;background:#fffdfb}input:focus,select:focus,textarea:focus{outline:2px solid #efc16b;border-color:#b77b2a}small.error{display:block;color:#c62828;margin-top:5px;min-height:14px}.submit{width:100%;background:var(--wine);color:white;border:0;border-radius:8px;padding:13px;font-size:1rem;font-weight:800;margin-top:20px;cursor:pointer}.submit:disabled{background:#b9a9a2;cursor:not-allowed}.success{color:#167333;text-align:center;font-weight:700;margin-bottom:0}.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}.about-layout img{width:100%;height:360px;object-fit:cover;border-radius:16px}.about-layout p{line-height:1.75;color:var(--muted)}.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}.contact-info{background:#fff0df;padding:25px;border-radius:14px}.contact-info p{line-height:1.8}.notice{background:#fff1d9;padding:15px;border-radius:10px;margin-top:20px}
+footer{background:var(--wine);color:white;text-align:center;padding:22px 15px}footer p{margin:5px}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.show{display:flex}.modal-content{background:white;max-width:520px;width:100%;padding:25px;border-radius:16px;max-height:85vh;overflow:auto}.modal-content h2{color:var(--wine)}.close{float:right;border:0;background:#f3e5d9;border-radius:50%;width:34px;height:34px;font-size:1.2rem;cursor:pointer}
+@media(max-width:900px){.recipe-grid{grid-template-columns:repeat(2,1fr)}header{align-items:flex-start;flex-direction:column}nav{gap:15px}.about-layout,.contact-layout{grid-template-columns:1fr}.about-layout img{height:280px}}
+@media(max-width:600px){.hero{min-height:360px;padding:45px 6%}.features{grid-template-columns:repeat(2,1fr)}.feature:nth-child(2){border-right:0}.recipe-grid{grid-template-columns:1fr}.section{padding:35px 5%}.card{margin:20px 5%;padding:20px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}nav{gap:12px}nav a{font-size:.88rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">🍳 Shamini's <span>Kitchen</span></div>
+  <nav aria-label="Main navigation">
+    <a href="#home" data-page="home" class="active">Home</a>
+    <a href="#recipes" data-page="recipes">Recipes</a>
+    <a href="#register" data-page="register">Register</a>
+    <a href="#about" data-page="about">About</a>
+    <a href="#contact" data-page="contact">Contact</a>
+  </nav>
+</header>
+<main>
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Cook • Learn • Enjoy</div>
+      <h1>Discover Delicious <span>Cooking Recipes</span></h1>
+      <p>Easy homemade recipes, fresh ingredients, and little moments of joy around your table.</p>
+      <a class="btn" href="#recipes">Explore Recipes →</a>
+    </div>
+  </div>
+  <div class="features">
+    <div class="feature"><div class="emoji">👩‍🍳</div><h3>Easy Recipes</h3><p>Simple & tasty</p></div>
+    <div class="feature"><div class="emoji">❤️</div><h3>Healthy Food</h3><p>Nutritious choices</p></div>
+    <div class="feature"><div class="emoji">⏱️</div><h3>Quick Cooking</h3><p>Ready in minutes</p></div>
+    <div class="feature"><div class="emoji">🍽️</div><h3>For Everyone</h3><p>All skill levels</p></div>
+  </div>
+  <div class="section">
+    <div class="section-head"><h2>Today's Favorites</h2><p>Fresh inspiration for your next meal</p></div>
+    <div class="recipe-grid" id="featured-recipes"></div>
+  </div>
+</section>
+<section id="recipes" class="page">
+  <div class="section">
+    <div class="section-head"><h2>Our Recipes</h2><p>Delicious recipes for every mood!</p></div>
+    <div class="recipe-grid" id="all-recipes"></div>
+  </div>
+</section>
+<section id="register" class="page">
+  <div class="card">
+    <h2>🍰 Join Our Kitchen</h2>
+    <p style="text-align:center;color:#78665d">Create your account and explore tasty recipes.</p>
+    <form id="registration" novalidate>
+      <div class="form-grid">
+        <div class="field full"><label for="name">Full Name</label><input id="name" name="name" placeholder="Enter your name" autocomplete="name"><small class="error" id="name-error"></small></div>
+        <div class="field full"><label for="email">Email Address</label><input id="email" name="email" type="email" placeholder="Enter your email" autocomplete="email"><small class="error" id="email-error"></small></div>
+        <div class="field full"><label for="password">Password</label><input id="password" name="password" type="password" placeholder="Minimum 8 characters"><small class="error" id="password-error"></small></div>
+        <div class="field"><label for="age">Age</label><input id="age" name="age" type="number" min="18" max="30" placeholder="18–30"><small class="error" id="age-error"></small></div>
+        <div class="field"><label for="mobile">Mobile Number</label><input id="mobile" name="mobile" type="tel" maxlength="10" placeholder="10-digit number"><small class="error" id="mobile-error"></small></div>
+        <div class="field"><label for="gender">Gender</label><select id="gender" name="gender"><option value="">Select gender</option><option>Female</option><option>Male</option><option>Other</option></select><small class="error" id="gender-error"></small></div>
+        <div class="field"><label for="state">State</label><select id="state" name="state"><option value="">Select state</option><option>Tamil Nadu</option><option>Kerala</option><option>Karnataka</option><option>Andhra Pradesh</option><option>Telangana</option><option>Maharashtra</option></select><small class="error" id="state-error"></small></div>
+      </div>
+      <button class="submit" id="register-btn" type="submit" disabled>Register Now</button>
+      <p class="success" id="register-success" role="status"></p>
+    </form>
+  </div>
+</section>
+<section id="about" class="page">
+  <div class="section">
+    <div class="section-head"><h2>About Shamini's Kitchen</h2><p>Our passion for good food</p></div>
+    <div class="about-layout">
+      <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=900&q=85" alt="Warm home kitchen">
+      <div><h2 style="color:var(--wine)">A little love in every recipe</h2><p>Shamini's Kitchen is your friendly cooking companion. We share easy, delicious recipes that make everyday cooking simple and enjoyable.</p><p>Whether you're a beginner or a food lover, find fresh ideas for breakfast, lunch, dinner, and sweet treats.</p><ul><li>Easy-to-follow recipes</li><li>Healthy meal ideas</li><li>Cooking tips and tricks</li></ul><a class="btn" href="#recipes">Explore Recipes →</a></div>
+    </div>
+  </div>
+</section>
+<section id="contact" class="page">
+  <div class="section">
+    <div class="section-head"><h2>Contact Us</h2><p>We'd love to hear from you!</p></div>
+    <div class="contact-layout">
+      <div class="contact-info"><h3>Get in touch</h3><p>📍 Chennai, Tamil Nadu, India</p><p>✉️ hello@shaminiskitchen.example</p><p>☎️ +91 98765 43210</p><div class="notice">Have a recipe suggestion or cooking question? Send us a message.</div></div>
+      <div class="card" style="margin:0"><form id="contact-form"><div class="field"><label for="cname">Your Name</label><input id="cname" required placeholder="Your name"></div><div class="field"><label for="cemail">Your Email</label><input id="cemail" type="email" required placeholder="Your email"></div><div class="field"><label for="message">Message</label><textarea id="message" rows="5" required placeholder="Write your message"></textarea></div><button class="submit" type="submit">Send Message</button><p class="success" id="contact-success"></p></form></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><p><strong>🍳 Shamini's Kitchen</strong></p><p>Made with ❤️ for food lovers</p><p>© 2026 Shamini's Kitchen. All rights reserved.</p></footer>
+<div class="modal" id="recipe-modal" role="dialog" aria-modal="true"><div class="modal-content"><button class="close" id="close-modal" aria-label="Close">×</button><div id="modal-recipe"></div></div></div>
+<script>
+const recipes=[
+ {name:"Fresh Vegetable Salad",time:"15 min",category:"Healthy",desc:"A refreshing mix of crisp vegetables, herbs, and a light dressing.",img:"https://images.unsplash.com/photo-1512621776951-a57141f2e લોકોને?auto=format&fit=crop&w=700&q=80",ingredients:["Mixed greens","Cherry tomatoes","Cucumber","Olive oil","Lemon juice"]},
+ {name:"Creamy Pasta",time:"30 min",category:"Dinner",desc:"Rich and creamy pasta tossed with herbs for a comforting meal.",img:"https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=80",ingredients:["Pasta","Cream","Garlic","Parmesan","Fresh basil"]},
+ {name:"Tomato Soup",time:"25 min",category:"Starter",desc:"A warm, smooth tomato soup with a hint of basil.",img:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80",ingredients:["Tomatoes","Onion","Garlic","Vegetable stock","Basil"]},
+ {name:"Paneer Tikka",time:"35 min",category:"Snack",desc:"Spiced paneer cubes grilled with colorful vegetables.",img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=700&q=80",ingredients:["Paneer","Yogurt","Tikka spices","Bell pepper","Lemon"]},
+ {name:"Chocolate Cupcakes",time:"35 min",category:"Dessert",desc:"Soft chocolate cupcakes perfect for a sweet treat.",img:"https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=700&q=80",ingredients:["Flour","Cocoa powder","Sugar","Milk","Butter"]},
+ {name:"Homemade Pizza",time:"45 min",category:"Dinner",desc:"A golden crust topped with cheese, tomato, and your favorites.",img:"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=80",ingredients:["Pizza dough","Tomato sauce","Mozzarella","Vegetables","Oregano"]},
+ {name:"Fruit Smoothie",time:"10 min",category:"Breakfast",desc:"A bright, fruity smoothie for a quick breakfast.",img:"https://images.unsplash.com/photo-×?auto=format&fit=crop&w=700&q=80",ingredients:["Banana","Strawberries","Yogurt","Milk","Honey"]},
+ {name:"Masala Dosa",time:"25 min",category:"Breakfast",desc:"Crispy dosa filled with flavorful potato masala.",img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=700&q=80",ingredients:["Dosa batter","Potatoes","Onion","Mustard seeds","Curry leaves"]}
+];
+// Use reliable fallback images if a remote image URL is unavailable.
+const fallback="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=700&q=80";
+function card(r,i){return `<article class="recipe-card"><img src="${r.img}" alt="${r.name}" onerror="this.onerror=null;this.src='${fallback}'"><div class="recipe-body"><span class="tag">${r.category} · ${r.time}</span><h3>${r.name}</h3><p>${r.desc}</p><button class="small-btn" onclick="showRecipe(${i})">View Recipe →</button></div></article>`}
+document.getElementById("featured-recipes").innerHTML=recipes.slice(0,4).map(card).join("");
+document.getElementById("all-recipes").innerHTML=recipes.map(card).join("");
+function showRecipe(i){const r=recipes[i];document.getElementById("modal-recipe").innerHTML=`<h2>${r.name}</h2><p>${r.desc}</p><p><strong>Preparation time:</strong> ${r.time}</p><h3>Ingredients</h3><ul>${r.ingredients.map(x=>`<li>${x}</li>`).join("")}</ul><p><strong>Method:</strong> Prepare the ingredients, cook or assemble as appropriate, season to taste, and serve fresh. Enjoy!</p>`;document.getElementById("recipe-modal").classList.add("show")}
+document.getElementById("close-modal").onclick=()=>document.getElementById("recipe-modal").classList.remove("show");
+document.getElementById("recipe-modal").onclick=e=>{if(e.target.id==="recipe-modal")e.currentTarget.classList.remove("show")};
+function navigate(){let page=(location.hash||"#home").slice(1);if(!document.getElementById(page))page="home";document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("active",a.dataset.page===page));window.scrollTo(0,0)}
+window.addEventListener("hashchange",navigate);navigate();
+const form=document.getElementById("registration");
+const fields=["name","email","password","age","mobile","gender","state"];
+function fieldError(id){const v=document.getElementById(id).value.trim();if(!v)return "This field is required.";if(id==="name"&&!/^[A-Za-z ]+$/.test(v))return "Use letters and spaces only.";if(id==="email"&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))return "Enter a valid email address.";if(id==="password"&&!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(v))return "Use uppercase, lowercase, a number, and 8+ characters.";if(id==="age"&&(!/^\d+$/.test(v)||+v<18||+v>30))return "Age must be between 18 and 30.";if(id==="mobile"&&!/^\d{10}$/.test(v))return "Enter exactly 10 digits.";return ""}
+function validate(show){let valid=true;fields.forEach(id=>{let err=fieldError(id);if(err)valid=false;if(show||document.getElementById(id).value)document.getElementById(id+"-error").textContent=err});document.getElementById("register-btn").disabled=!valid;return valid}
+fields.forEach(id=>document.getElementById(id).addEventListener("input",()=>{validate(false);document.getElementById("register-success").textContent=""}));
+form.addEventListener("submit",e=>{e.preventDefault();if(validate(true)){document.getElementById("register-success").textContent="Registration completed successfully! Welcome to our kitchen.";form.reset();document.getElementById("register-btn").disabled=true}});
+document.getElementById("contact-form").addEventListener("submit",e=>{e.preventDefault();document.getElementById("contact-success").textContent="Thank you! Your message has been received.";e.target.reset()});
+</script>
+</body>
+</html>
